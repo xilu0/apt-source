@@ -20,10 +20,12 @@ script:
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - &&
    add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable' &&
    cp /root/kubernetes.list /etc/apt/sources.list.d/ &&
+   echo deb https://download.ceph.com/debian-nautilus/dists/xenial/ main | sudo tee /etc/apt/sources.list.d/ceph.list &&
    apt-get update &&
    apt-get install -y --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
    apt-get install -y --download-only docker-compose python-docker python-chardet python-requests &&
-   apt-get install -y --download-only chrony auditd audispd-plugins rsync jq git tcpdump net-tools ipvsadm graphviz &&
+   apt-get install -y --download-only chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
+   apt-get install -y --download-only ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror open-vm-tools nfs-common &&
    apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
    mv /var/cache/apt/archives/*.deb /root/debs/"
 
