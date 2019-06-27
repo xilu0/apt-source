@@ -21,7 +21,7 @@ script:
    curl -fsSL https://download.ceph.com/keys/release.asc | apt-key add - &&
    add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable' &&
    cp /root/kubernetes.list /etc/apt/sources.list.d/ &&
-   echo deb https://download.ceph.com/debian-${CEPH_VERSION}/ xenial main | sudo tee /etc/apt/sources.list.d/ceph.list &&
+   echo deb https://download.ceph.com/debian-${CEPH_VERSION}/ xenial main | tee /etc/apt/sources.list.d/ceph.list &&
    apt-get update &&
    apt-get install -y --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
    apt-get install -y --download-only docker-compose python-docker python-chardet python-requests &&
