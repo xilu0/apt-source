@@ -9,11 +9,12 @@ docker run -d -p 2008:2008 --name=apt-source wise2c/apt-source:v1.15.0
 
 在需要安装docker/k8s/ceph/nfs的其它主机上：
 
-注释原来source.list原来内容（记得先备份），只添加 ：
+创建一个文件 wise2c.list 并将其拷贝至 /etc/apt/sources.list.d/
 
 ###############################################
 
 deb http://apt-source-server-ip:2008/debs apt-source-server-ip wise2c main
+
 deb-src http://apt-source-server-ip wise2c main
 
 ###############################################
