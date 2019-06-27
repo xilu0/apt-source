@@ -14,19 +14,13 @@ env:
  
 script:
 - >
-  docker run -t --rm -v ${PWD}/debs:/root/debs -v ${PWD}/kubernetes.list:/etc/apt/sources.list.d/kubernetes.list ubuntu:16.04
-  bash -c
-  "apt-get update && apt-get install -y apt-transport-https curl &&
-   curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - &&
-   apt-get update &&
-   apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
-   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - &&
-   apt-get install software-properties-common &&
-   add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" &&
-   apt-get update &&
-   apt-get install docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
-
-   mv /var/cache/apt/archives/*.deb /root/debs/"
+  apt-get update && apt-get install -y apt-transport-https curl software-properties-common &&
+  curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - &&
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - &&
+  add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" &&
+  apt-get update &&
+  apt-get install --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
+  mv /var/cache/apt/archives/*.deb /root/debs/"
 
 - sudo chmod -R 755 ${PWD}/debs
 - docker build -t wise2c/apt-source:$TRAVIS_BRANCH .
