@@ -23,10 +23,10 @@ deb-src http://apt-source-server-ip wise2c main
 
 接着执行一次apt-get update命令后即可直接用 apt-get install命令命令安装相关软件了。例如：
 
-apt-get install docker docker-python docker-compose
+apt-get install docker-ce python-docker docker-compose
 
 apt-get install rsync python-chardet jq nfs-utils
   
-apt-get install kubernetes-cni kubectl kubelet kubeadm
+apt-get install kubectl kubelet kubeadm
 
 apt-get install ceph-deploy ceph ceph-radosgw rbd-nbd rbd-mirror
