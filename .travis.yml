@@ -21,7 +21,7 @@ script:
    add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable' &&
    cp /root/kubernetes.list /etc/apt/sources.list.d/ &&
    apt-get update &&
-   apt-get install --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
+   apt-get install -y --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
    mv /var/cache/apt/archives/*.deb /root/debs/"
 
 - sudo chmod -R 755 ${PWD}/debs
