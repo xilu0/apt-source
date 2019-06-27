@@ -20,7 +20,7 @@ script:
    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - &&
    add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable' &&
    cp /root/kubernetes.list /etc/apt/sources.list.d/ &&
-   echo deb https://download.ceph.com/debian-nautilus/dists/xenial/ main | sudo tee /etc/apt/sources.list.d/ceph.list &&
+   echo deb https://download.ceph.com/debian-${CEPH_VERSION}/dists/xenial/ main | sudo tee /etc/apt/sources.list.d/ceph.list &&
    apt-get update &&
    apt-get install -y --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
    apt-get install -y --download-only docker-compose python-docker python-chardet python-requests &&
