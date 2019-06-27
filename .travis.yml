@@ -24,7 +24,7 @@ script:
    apt-get install software-properties-common &&
    add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable" &&
    apt-get update &&
-   apt-get install docker-ce=${DOCKER_VERSION}~ubuntu-xenial
+   apt-get install docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
 
    mv /var/cache/apt/archives/*.deb /root/debs/"
 
