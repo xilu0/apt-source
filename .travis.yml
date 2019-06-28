@@ -13,8 +13,8 @@ env:
  
 script:
 - >
-  sudo rm -rf ~/debs &&
-  sudo mkdir -p ~/debs/packages &&
+  sudo rm -rf /home/travis/debs &&
+  sudo mkdir -p /home/travis/debs/packages &&
   sudo apt-get update &&
   sudo apt-get install -y apt-transport-https curl software-properties-common &&
   sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &&
@@ -30,11 +30,11 @@ script:
   sudo apt-get install -y --download-only chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
   sudo apt-get install -y --download-only ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
   sudo apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
-  sudo mv /var/cache/apt/archives/*.deb ~/debs/packages/
+  sudo mv /var/cache/apt/archives/*.deb /home/travis/debs/packages
 
-- cd ~/debs/packages/
-- sudo apt-ftparchive packages . > ~/debs/Packages
-- sudo apt-ftparchive release . > ~/debs/Release
+- cd /home/travis/debs/packages/
+- sudo apt-ftparchive packages . > /home/travis/debs/Packages
+- sudo apt-ftparchive release . > /home/travis/debs/Release
   
 - sudo chmod -R 755 ${PWD}/debs
 - docker build -t wise2c/apt-source:$TRAVIS_BRANCH .
