@@ -32,6 +32,7 @@ script:
   sudo apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
   sudo mv /var/cache/apt/archives/*.deb /home/travis/debs/packages
 
+- pwd
 - cd /home/travis/debs/packages/
 - ls
 - sudo apt-ftparchive packages . > /home/travis/debs/Packages
