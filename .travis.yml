@@ -5,9 +5,6 @@ sudo: required
 services:
 - docker
 
-before_install:
-- docker pull ubuntu:16.04
-
 env:
  global:
    - CEPH_VERSION=nautilus
@@ -16,23 +13,26 @@ env:
  
 script:
 - >
-  docker run -t --rm -v ${PWD}/debs:/root/debs -v ${PWD}/kubernetes.list:/root/kubernetes.list ubuntu:16.04 bash -c
-  "apt-get update && apt-get install -y apt-transport-https curl software-properties-common &&
-   curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - &&
-   curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - &&
-   curl -fsSL https://download.ceph.com/keys/release.asc | apt-key add - &&
-   add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable' &&
-   cp /root/kubernetes.list /etc/apt/sources.list.d/ &&
-   echo deb https://download.ceph.com/debian-${CEPH_VERSION}/ xenial main | tee /etc/apt/sources.list.d/ceph.list &&
-   apt-get update &&
-   apt-get install -y --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
-   apt-get install -y --download-only docker-compose python-docker python-chardet python-requests &&
-   apt-get install -y --download-only chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
-   apt-get install -y --download-only ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
-   apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
-   mv /var/cache/apt/archives/*.deb /root/debs/ &&
-   dpkg-scanpackages /root/debs/ | gzip > /root/debs/Packages.gz"
-
+  rm -rf debs &&
+  mkdir -p debs/packages &&
+  apt-get update && apt-get install -y apt-transport-https curl software-properties-common &&
+  curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key add - &&
+  curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - &&
+  curl -fsSL https://download.ceph.com/keys/release.asc | apt-key add - &&
+  add-apt-repository 'deb [arch=amd64] https://download.docker.com/linux/ubuntu xenial stable' &&
+  cp kubernetes.list /etc/apt/sources.list.d/ &&
+  echo deb https://download.ceph.com/debian-${CEPH_VERSION}/ xenial main | tee /etc/apt/sources.list.d/ceph.list &&
+  apt-get clean &&
+  apt-get update &&
+  apt-get install -y --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
+  apt-get install -y --download-only docker-compose python-docker python-chardet python-requests &&
+  apt-get install -y --download-only chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
+  apt-get install -y --download-only ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
+  apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
+  mv /var/cache/apt/archives/*.deb debs/packages &&
+  apt-ftparchive packages debs/packages/. > debs/Packages &&
+  apt-ftparchive release debs/packages/. > debs/Release
+  
 - sudo chmod -R 755 ${PWD}/debs
 - docker build -t wise2c/apt-source:$TRAVIS_BRANCH .
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
