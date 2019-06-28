@@ -30,10 +30,10 @@ script:
   sudo apt-get install -y --download-only chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
   sudo apt-get install -y --download-only ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
   sudo apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
-  sudo mv /var/cache/apt/archives/*.deb ~/debs/packages/ &&
-  echo "Done############################"
-  sudo apt-ftparchive packages debs/package/. > /root/debs/123 &&
-  sudo apt-ftparchive release debs/package/. > /root/debs/Release
+  sudo mv /var/cache/apt/archives/*.deb ~/debs/packages/
+
+- sudo apt-ftparchive packages debs/package/. > /root/debs/Packages
+- sudo apt-ftparchive release debs/package/. > /root/debs/Release
   
 - sudo chmod -R 755 ${PWD}/debs
 - docker build -t wise2c/apt-source:$TRAVIS_BRANCH .
