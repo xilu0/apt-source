@@ -31,7 +31,9 @@ script:
   sudo apt-get install -y --download-only ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
   sudo apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
   sudo mv /var/cache/apt/archives/*.deb /root/debs/packages/ &&
-  sudo touch /root/debs/Packages
+  sudo ls /root/debs/ &&
+  sudo ls /root/debs/packages &&
+  sudo touch /root/debs/Packages &&
   echo 'Done############################'
   sudo apt-ftparchive packages debs/package/. > /root/debs/Packages &&
   sudo apt-ftparchive release debs/package/. > /root/debs/Release
