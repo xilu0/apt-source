@@ -14,7 +14,7 @@ env:
 script:
 - >
   sudo rm -rf debs &&
-  sudo mkdir -p debs/packages &&
+  sudo mkdir -p debs/package &&
   sudo apt-get update &&
   sudo apt-get install -y apt-transport-https curl software-properties-common &&
   sudo curl -fsSL https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key add - &&
@@ -30,9 +30,9 @@ script:
   sudo apt-get install -y --download-only chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
   sudo apt-get install -y --download-only ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
   sudo apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
-  sudo mv /var/cache/apt/archives/*.deb debs/packages &&
-  sudo apt-ftparchive packages debs/packages/. > debs/Packages &&
-  sudo apt-ftparchive release debs/packages/. > debs/Release
+  sudo mv /var/cache/apt/archives/*.deb debs/package &&
+  sudo apt-ftparchive packages debs/package/. > debs/Packages &&
+  sudo apt-ftparchive release debs/package/. > debs/Release
   
 - sudo chmod -R 755 ${PWD}/debs
 - docker build -t wise2c/apt-source:$TRAVIS_BRANCH .
