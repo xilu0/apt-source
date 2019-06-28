@@ -32,11 +32,8 @@ script:
   sudo apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
   sudo mv /var/cache/apt/archives/*.deb /home/travis/debs/packages
 
-- pwd
-- cd /home/travis/debs/packages/
-- ls
-- sudo apt-ftparchive packages . > /home/travis/debs/Packages
-- sudo apt-ftparchive release . > /home/travis/debs/Release
+- sudo apt-ftparchive packages . > /tmp/Packages
+- sudo apt-ftparchive release . > /tmp/Release
   
 - sudo chmod -R 755 ${PWD}/debs
 - docker build -t wise2c/apt-source:$TRAVIS_BRANCH .
