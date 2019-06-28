@@ -33,9 +33,9 @@ script:
   sudo mv /var/cache/apt/archives/*.deb /root/debs/packages/ &&
   sudo ls /root/debs/ &&
   sudo ls /root/debs/packages &&
-  sudo touch /root/debs/Packages &&
+  sudo touch /root/debs/abcdtest &&
   echo 'Done############################'
-  sudo apt-ftparchive packages debs/package/. > /root/debs/Packages &&
+  sudo apt-ftparchive packages debs/package/. > /root/debs/abcdtest &&
   sudo apt-ftparchive release debs/package/. > /root/debs/Release
   
 - sudo chmod -R 755 ${PWD}/debs
