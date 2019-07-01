@@ -25,12 +25,13 @@ script:
   sudo echo deb https://download.ceph.com/debian-${CEPH_VERSION}/ xenial main | sudo tee /etc/apt/sources.list.d/ceph.list &&
   sudo apt-get clean &&
   sudo apt-get update &&
-  sudo apt-get install -y --download-only docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
-  sudo apt-get install -y --download-only docker-compose python-docker python-chardet python-requests &&
-  sudo apt-get install -y --download-only chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
-  sudo apt-get install -y --download-only ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
-  sudo apt-get install -y --download-only kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
-  sudo mv /var/cache/apt/archives/*.deb debs/packages &&
+  sudo chmod +x apt-download.sh &&
+  sudo ./apt-download.sh docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
+  sudo ./apt-download.sh docker-compose python-docker python-chardet python-requests &&
+  sudo ./apt-download.sh chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
+  sudo ./apt-download.sh ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
+  sudo ./apt-download.sh kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
+  sudo mv *.deb debs/packages &&
   sudo apt-ftparchive packages debs/packages/. > /tmp/Packages &&
   sudo apt-ftparchive release debs/packages/. > /tmp/Release &&
   sudo cp /tmp/Packages debs/ &&
