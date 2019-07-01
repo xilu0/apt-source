@@ -27,7 +27,6 @@ script:
   sudo apt-get update &&
   sudo chmod +x apt-download.sh &&
   sudo ./apt-download.sh docker-ce &&
-  #=${DOCKER_VERSION}~ubuntu-xenial &&
   sudo ./apt-download.sh docker-compose python-docker python-chardet python-requests &&
   sudo ./apt-download.sh chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
   sudo ./apt-download.sh ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
