@@ -26,38 +26,17 @@ script:
   sudo apt-get clean &&
   sudo apt-get update &&
   sudo chmod +x apt-download.sh &&
-  sudo ./apt-download.sh docker-ce=${DOCKER_VERSION}~ubuntu-xenial &&
-  sudo ./apt-download.sh docker-compose &&
-  sudo ./apt-download.sh python-docker &&
-  sudo ./apt-download.sh python-chardet &&
-  sudo ./apt-download.sh python-requests &&
-  sudo ./apt-download.sh chrony &&
-  sudo ./apt-download.sh auditd &&
-  sudo ./apt-download.sh audispd-plugins &&
-  sudo ./apt-download.sh dnsutils &&
-  sudo ./apt-download.sh netcat &&
-  sudo ./apt-download.sh rsync &&
-  sudo ./apt-download.sh jq &&
-  sudo ./apt-download.sh git &&
-  sudo ./apt-download.sh tcpdump &&
-  sudo ./apt-download.sh net-tools &&
-  sudo ./apt-download.sh ipvsadm &&
-  sudo ./apt-download.sh graphviz &&
-  sudo ./apt-download.sh ceph-deploy &&
-  sudo ./apt-download.sh ceph &&
-  sudo ./apt-download.sh rbd-nbd &&
-  sudo ./apt-download.sh rbd-mirror &&
-  sudo ./apt-download.sh radosgw &&
-  sudo ./apt-download.sh radosgw-agent &&
-  sudo ./apt-download.sh open-vm-tools &&
-  sudo ./apt-download.sh nfs-common &&
+  sudo ./apt-download.sh docker-ce &&
+  #=${DOCKER_VERSION}~ubuntu-xenial &&
+  sudo ./apt-download.sh docker-compose python-docker python-chardet python-requests &&
+  sudo ./apt-download.sh chrony auditd audispd-plugins dnsutils netcat rsync jq git tcpdump net-tools ipvsadm graphviz &&
+  sudo ./apt-download.sh ceph-deploy ceph rbd-nbd rbd-mirror radosgw radosgw-agent open-vm-tools nfs-common &&
   sudo ./apt-download.sh kubelet=${KUBE_VERSION} kubectl=${KUBE_VERSION} kubeadm=${KUBE_VERSION} &&
   sudo mv *.deb debs/packages &&
   sudo apt-ftparchive packages debs/packages/. > /tmp/Packages &&
   sudo apt-ftparchive release debs/packages/. > /tmp/Release &&
   sudo cp /tmp/Packages debs/ &&
   sudo cp /tmp/Release debs/
-
 - sudo chmod -R 755 ${PWD}/debs
 - docker build -t wise2c/apt-source:$TRAVIS_BRANCH .
 - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
