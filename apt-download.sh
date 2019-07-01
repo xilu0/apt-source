@@ -1,3 +1,4 @@
+#!/bin/bash
 function getDepends()
 {
    # use tr to del < >
@@ -24,7 +25,7 @@ do
       echo "$j depended $added"
       newlist="$newlist $added"
       echo "download $j"
-      apt-get download $j 
+      apt-get download $j
     done
 
     libs=$newlist
